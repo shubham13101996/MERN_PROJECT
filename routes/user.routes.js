@@ -3,10 +3,20 @@ const UserModel = require("../models/UserModel");
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 const userRouter = express.Router();
-userRouter.get("/", (req, res) => {
-  res.send({
-    message: "ALL USER!!!",
-  });
+
+userRouter.get("/:id", async (req, res) => {
+  let { id } = req.params;
+  try {
+    let data = await UserModel.find({ _id: id });
+    res.send({
+      message: "Getting user Successfully",
+      user: data[0],
+    });
+  } catch (error) {
+    res.send({
+      message: " User Not Found",
+    });
+  }
 });
 
 userRouter.post("/register", async (req, res) => {
