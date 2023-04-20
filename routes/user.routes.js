@@ -52,4 +52,31 @@ userRouter.post("/login", async (req, res) => {
   }
 });
 
+userRouter.patch("/:id", async (req, res) => {
+  let { id } = req.params;
+  try {
+    await UserModel.findByIdAndUpdate({ _id: id }, req.body);
+    res.send({
+      message: " Data Updated Successfully",
+    });
+  } catch (error) {
+    res.send({
+      message: error.message,
+    });
+  }
+});
+
+userRouter.delete("/:id", async (req, res) => {
+  let { id } = req.params;
+  try {
+    await UserModel.findByIdAndDelete({ _id: id });
+    res.send({
+      message: " Data Deleted Successfully",
+    });
+  } catch (error) {
+    res.send({
+      message: error.message,
+    });
+  }
+});
 module.exports = { userRouter };
